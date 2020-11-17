@@ -38,10 +38,12 @@ public class MouseScript : MonoBehaviour
     private Vector3 _mousePosition;
     private RaycastHit _rayHit;    
     private Ray _rayCast;
+    private GridSystem _gridSystem;
 
     void Start()
     {
         meshRend = GetComponent<MeshRenderer>();
+        _gridSystem = FindObjectOfType<GridSystem>();
     }
 
     void Update()
@@ -109,7 +111,7 @@ public class MouseScript : MonoBehaviour
         {
             // Create object
             newObj = Instantiate(item_1);
-            newObj.transform.position = transform.position;
+            newObj.transform.position = SnapToGrid(_rayHit.point);
             newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
             newObj.layer = 9;
 
@@ -124,7 +126,7 @@ public class MouseScript : MonoBehaviour
         {
             // Create object
             newObj = Instantiate(item_2);
-            newObj.transform.position = transform.position;
+            newObj.transform.position = SnapToGrid(_rayHit.point);
             newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
             newObj.layer = 9;
 
@@ -139,7 +141,7 @@ public class MouseScript : MonoBehaviour
         {
             // Create object
             newObj = Instantiate(item_3);
-            newObj.transform.position = transform.position;
+            newObj.transform.position = SnapToGrid(_rayHit.point);
             newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
             newObj.layer = 9;
 
@@ -154,7 +156,7 @@ public class MouseScript : MonoBehaviour
         {
             // Create object
             newObj = Instantiate(item_4);
-            newObj.transform.position = transform.position;
+            newObj.transform.position = SnapToGrid(_rayHit.point);
             newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
             newObj.layer = 9;
 
@@ -169,7 +171,7 @@ public class MouseScript : MonoBehaviour
         {
             // Create object
             newObj = Instantiate(item_5);
-            newObj.transform.position = transform.position;
+            newObj.transform.position = SnapToGrid(_rayHit.point);
             newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
             newObj.layer = 9;
 
@@ -184,7 +186,7 @@ public class MouseScript : MonoBehaviour
         {
             // Create object
             newObj = Instantiate(item_6);
-            newObj.transform.position = transform.position;
+            newObj.transform.position = SnapToGrid(_rayHit.point);
             newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
             newObj.layer = 9;
 
@@ -199,7 +201,7 @@ public class MouseScript : MonoBehaviour
         {
             // Create object
             newObj = Instantiate(item_7);
-            newObj.transform.position = transform.position;
+            newObj.transform.position = SnapToGrid(_rayHit.point);
             newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
             newObj.layer = 9;
 
@@ -214,7 +216,7 @@ public class MouseScript : MonoBehaviour
         {
             // Create object
             newObj = Instantiate(item_8);
-            newObj.transform.position = transform.position;
+            newObj.transform.position = SnapToGrid(_rayHit.point);
             newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
             newObj.layer = 9;
 
@@ -230,7 +232,7 @@ public class MouseScript : MonoBehaviour
             if (manager.playerPlaced == false)
             {
                 newObj = Instantiate(playerSt);
-                newObj.transform.position = transform.position;
+                newObj.transform.position = SnapToGrid(_rayHit.point);
                 newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
                 newObj.layer = 9;
                 newObj.AddComponent<CapsuleCollider>();
@@ -245,5 +247,10 @@ public class MouseScript : MonoBehaviour
                 eo.data.obType = EditorObject.ObjectType.Player;
             }
         }
+    }
+
+    Vector3 SnapToGrid(Vector3 gridPoint)
+    {
+        return _gridSystem.GetClosestGridPoint(gridPoint);
     }
 }
