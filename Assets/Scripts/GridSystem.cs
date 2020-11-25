@@ -25,7 +25,7 @@ public class GridSystem : MonoBehaviour
         {
             for (float y = 0; y < 39; y += _size)
             {
-                var point = GetClosestGridPoint(new Vector3(x - 49, y - 19, 0.0f));
+                var point = GetClosestGridPoint(new Vector3(x - 49, y - 19, 1.0f));
                 newObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 newObj.transform.localScale = new Vector3(-0.1f, -0.1f, -0.1f);
                 var newObjRenderer = newObj.GetComponent<Renderer>();
