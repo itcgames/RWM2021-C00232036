@@ -26,7 +26,7 @@ public class ManagerScript : MonoBehaviour
     public Animator messageAnim;
     private bool _itemPositionIn = true;
     private bool _optionPositionIn = true;
-    private bool _saveLoadPositionIn = false; // Not used until loading and saving is done
+    private bool _saveLoadPositionIn = false;
     private LevelEditor _level;
 
     void Start()
@@ -76,7 +76,21 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
-    // LOAD AND SAVE GO HERE
+    public void ChooseSave()
+    {
+        if (_saveLoadPositionIn == false)
+        {
+            saveUIAnimation.SetTrigger("SaveLoadIn");
+            _saveLoadPositionIn = true;
+            saveLoadMenuOpen = true;
+        }
+        else
+        {
+            saveUIAnimation.SetTrigger("SaveLoadOut");
+            _saveLoadPositionIn = false;
+            saveLoadMenuOpen = false;
+        }
+    }
 
     public void Select_Item_1() { msScript.itemOption = MouseScript.ItemList.Item_1; }
     public void Select_Item_2() { msScript.itemOption = MouseScript.ItemList.Item_2; }
@@ -113,4 +127,56 @@ public class ManagerScript : MonoBehaviour
         msScript.meshRend.enabled = false;
         flipUI.SetActive(false);
     }
+
+    public void SaveLevel()
+    {
+        EditorObject[] foundObjects = FindObjectsOfType<EditorObject>();
+
+        foreach (EditorObject obj in foundObjects)
+        {
+            _level.editorObjects.Add(obj.data);
+        }
+
+        string json = JsonUtility.ToJson(_level);
+        string folder = Application.dataPath + "/JSON/";
+        string levelFile = "";
+
+        // Default file name
+        if (levelNameSave.text == "")
+        {
+            levelFile = "new_level.json";
+        }
+        else
+        {
+            levelFile = levelNameSave.text + ".json";
+        }
+
+        // If directory doesn't exist then create it
+        if (!Directory.Exists(folder))
+        {
+            Directory.CreateDirectory(folder);
+        }
+
+        string path = Path.Combine(folder, levelFile);
+
+        // Overwrite existing file
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+
+        // Save
+        File.WriteAllText(path, json);
+
+        // Remove save menu
+        saveUIAnimation.SetTrigger("SaveLoadOut");
+        _saveLoadPositionIn = false;
+        saveLoadMenuOpen = false;
+        levelNameSave.text = "";
+        levelNameSave.DeactivateInputField();
+        levelMessage.text = "JSON/" + levelFile + " saved";
+        messageAnim.Play("MessageFade", 0, 0);
+    }
 }
+
+
