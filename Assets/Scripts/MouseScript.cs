@@ -85,7 +85,7 @@ public class MouseScript : MonoBehaviour
                 }                    
                 else if (_colliding == true && manipulateOption == LevelManipulation.Destroy)
                 {
-                    if (_rayHit.collider.gameObject.name.Contains("PlayerModel"))
+                    if (_rayHit.collider.gameObject.name.Contains("Player"))
                     {
                         manager.playerPlaced = false;
                     }                        

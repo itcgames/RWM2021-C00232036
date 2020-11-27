@@ -26,7 +26,8 @@ public class ManagerScript : MonoBehaviour
     public Animator messageAnim;
     private bool _itemPositionIn = true;
     private bool _optionPositionIn = true;
-    private bool _saveLoadPositionIn = false;
+    private bool _savePositionIn = false;
+    private bool _loadPositionIn = false;
     private LevelEditor _level;
 
     void Start()
@@ -78,16 +79,32 @@ public class ManagerScript : MonoBehaviour
 
     public void ChooseSave()
     {
-        if (_saveLoadPositionIn == false)
+        if (_savePositionIn == false && _loadPositionIn == false && saveLoadMenuOpen == false)
         {
             saveUIAnimation.SetTrigger("SaveLoadIn");
-            _saveLoadPositionIn = true;
+            _savePositionIn = true;
             saveLoadMenuOpen = true;
         }
-        else
+        else if (_savePositionIn == true && _loadPositionIn == false && saveLoadMenuOpen == true)
         {
             saveUIAnimation.SetTrigger("SaveLoadOut");
-            _saveLoadPositionIn = false;
+            _savePositionIn = false;
+            saveLoadMenuOpen = false;
+        }
+    }
+
+    public void ChooseLoad()
+    {
+        if (_loadPositionIn == false && _savePositionIn == false && saveLoadMenuOpen == false)
+        {
+            loadUIAnimation.SetTrigger("SaveLoadIn");
+            _loadPositionIn = true;
+            saveLoadMenuOpen = true;
+        }
+        else if (_loadPositionIn == true && _savePositionIn == false && saveLoadMenuOpen == true)
+        {
+            loadUIAnimation.SetTrigger("SaveLoadOut");
+            _loadPositionIn = false;
             saveLoadMenuOpen = false;
         }
     }
@@ -170,11 +187,184 @@ public class ManagerScript : MonoBehaviour
 
         // Remove save menu
         saveUIAnimation.SetTrigger("SaveLoadOut");
-        _saveLoadPositionIn = false;
+        _savePositionIn = false;
         saveLoadMenuOpen = false;
         levelNameSave.text = "";
         levelNameSave.DeactivateInputField();
         levelMessage.text = "JSON/" + levelFile + " saved";
+        messageAnim.Play("MessageFade", 0, 0);
+    }
+
+    public void LoadLevel()
+    {
+        string folder = Application.dataPath + "/JSON/";
+        string levelFile = "";
+
+        // Default file name
+        if (levelNameLoad.text == "")
+        {
+            levelFile = "new_level.json";
+        }
+        else
+        {
+            levelFile = levelNameLoad.text + ".json";
+        }
+
+        string path = Path.Combine(folder, levelFile);
+
+        // Overwrite existing file
+        if (File.Exists(path))
+        {
+            // The objects currently in the level will be deleted
+            EditorObject[] foundObjects = FindObjectsOfType<EditorObject>();
+
+            foreach (EditorObject obj in foundObjects)
+            {
+                Destroy(obj.gameObject);
+            }
+
+            playerPlaced = false;
+
+            string json = File.ReadAllText(path);
+            _level = JsonUtility.FromJson<LevelEditor>(json);
+            CreateFromFile();
+        }
+        else
+        {
+            loadUIAnimation.SetTrigger("SaveLoadOut");
+            _loadPositionIn = false;
+            saveLoadMenuOpen = false;
+            levelMessage.text = levelFile + " not found";
+            messageAnim.Play("MessageFade", 0, 0);
+            levelNameLoad.DeactivateInputField();
+        }
+    }
+
+    void CreateFromFile()
+    {
+        GameObject newObj;
+
+        for (int i = 0; i < _level.editorObjects.Count; i++)
+        {
+            if (_level.editorObjects[i].obType == EditorObject.ObjectType.Item_1)
+            {
+                newObj = Instantiate(msScript.item_1);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 9;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Item_1;
+            }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Item_2)
+            {
+                newObj = Instantiate(msScript.item_2);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 9;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Item_2;
+            }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Item_3)
+            {
+                newObj = Instantiate(msScript.item_3);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 9;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Item_3;
+            }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Item_4)
+            {
+                newObj = Instantiate(msScript.item_4);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 9;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Item_4;
+            }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Item_5)
+            {
+                newObj = Instantiate(msScript.item_5);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 9;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Item_5;
+            }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Item_6)
+            {
+                newObj = Instantiate(msScript.item_6);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 9;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Item_6;
+            }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Item_7)
+            {
+                newObj = Instantiate(msScript.item_7);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 9;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Item_7;
+            }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Item_8)
+            {
+                newObj = Instantiate(msScript.item_8);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 9;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Item_8;
+            }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Player)
+            {
+                newObj = Instantiate(msScript.playerSt, transform.position, Quaternion.identity);
+                newObj.layer = 9;
+                newObj.AddComponent<CapsuleCollider>();
+                newObj.GetComponent<CapsuleCollider>().height = 2;
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                playerPlaced = true;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Player;
+            }
+        }
+
+        levelNameLoad.text = "";
+        levelNameLoad.DeactivateInputField();
+        loadUIAnimation.SetTrigger("SaveLoadOut");
+        _loadPositionIn = false;
+        saveLoadMenuOpen = false;
+        levelMessage.text = "Level loaded";
         messageAnim.Play("MessageFade", 0, 0);
     }
 }

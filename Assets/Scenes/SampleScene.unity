@@ -586,7 +586,7 @@ Animator:
   m_GameObject: {fileID: 198826719}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bf814b2f72ca7b04c8e5ec1d7e0e1d7a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6782,8 +6782,7 @@ MonoBehaviour:
   msScript: {fileID: 1717584622}
   levelNameSave: {fileID: 1551721933}
   levelNameLoad: {fileID: 983875274}
-  startMarker: {fileID: -1750125985355865389, guid: e73a69d0f0cbd964e9a0beed36b716c8,
-    type: 3}
+  startMarker: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   itemUIAnimation: {fileID: 297723639}
   optionUIAnimation: {fileID: 1104489338}
   saveUIAnimation: {fileID: 1313865744}
