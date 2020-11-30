@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\LevelEditor.cs" />
     <Compile Include="Assets\Scripts\ManagerScript.cs" />
     <Compile Include="Assets\Scripts\MouseScript.cs" />
+    <Compile Include="Assets\TitleMenuManager.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

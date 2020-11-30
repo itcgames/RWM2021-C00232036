@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ManagerScript : MonoBehaviour
@@ -366,6 +367,11 @@ public class ManagerScript : MonoBehaviour
         saveLoadMenuOpen = false;
         levelMessage.text = "Level loaded";
         messageAnim.Play("MessageFade", 0, 0);
+    }
+
+    public void BackToTitleScreen()
+    {
+        SceneManager.LoadScene("TitleScreen");
     }
 }
 
