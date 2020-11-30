@@ -32,6 +32,7 @@ public class MouseScript : MonoBehaviour
     public GameObject item_6;
     public GameObject item_7;
     public GameObject item_8;
+    public GameObject background;
 
     // Mouse and ray casting stuff
     private bool _colliding;
@@ -61,12 +62,12 @@ public class MouseScript : MonoBehaviour
             if (_rayHit.collider.gameObject.layer == 9) // Check if raycast hits object
             {
                 _colliding = true;
-                meshRend.material = disallowedPlacement;
+                meshRend.material = disallowedPlacement; // Red for no-no
             }
             else
             {
                 _colliding = false;
-                meshRend.material = allowedPlacement;
+                meshRend.material = allowedPlacement; // Green for cool and good
             }
         }
 
