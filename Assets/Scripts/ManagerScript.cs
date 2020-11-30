@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ManagerScript : MonoBehaviour
@@ -29,6 +30,12 @@ public class ManagerScript : MonoBehaviour
     private bool _savePositionIn = false;
     private bool _loadPositionIn = false;
     private LevelEditor _level;
+    public Transform dropdownMenu;
+    public GameObject background_1;
+    public GameObject background_2;
+    public GameObject background_3;
+    private int backgroundMenuIndex;
+    private GameObject data;
 
     void Start()
     {
@@ -41,6 +48,30 @@ public class ManagerScript : MonoBehaviour
         _level = new LevelEditor();
         _level.editorObjects = new List<EditorObject.Data>();
         return _level;
+    }
+
+    public void ChangeBackgroundImage()
+    {
+        backgroundMenuIndex = dropdownMenu.GetComponent<Dropdown>().value;
+
+        background_1.SetActive(false);
+        background_2.SetActive(false);
+        background_3.SetActive(false);
+
+        switch (backgroundMenuIndex)
+        {
+            case 0:
+                background_1.SetActive(true);
+                break;
+
+            case 1:
+                background_2.SetActive(true);
+                break;
+
+            case 2:
+                background_3.SetActive(true);
+                break;
+        }
     }
 
     void RotationValueChange()
@@ -149,10 +180,20 @@ public class ManagerScript : MonoBehaviour
     {
         EditorObject[] foundObjects = FindObjectsOfType<EditorObject>();
 
-        foreach (EditorObject obj in foundObjects)
+        foreach (EditorObject tempObj in foundObjects)
         {
-            _level.editorObjects.Add(obj.data);
+            _level.editorObjects.Add(tempObj.data);
         }
+
+        // Save current background value
+        EditorObject.Data objData;
+        //GameObject obj;
+        //EditorObject eo = obj.AddComponent<EditorObject>();
+        objData.bckGrndIndex = backgroundMenuIndex;
+        objData.obPosition = new Vector3(1, 1, 1);
+        objData.obRotation = Quaternion.identity;
+        objData.obType = EditorObject.ObjectType.Background;
+        _level.editorObjects.Add(objData);
 
         string json = JsonUtility.ToJson(_level);
         string folder = Application.dataPath + "/JSON/";
@@ -357,6 +398,12 @@ public class ManagerScript : MonoBehaviour
                 eo.data.obRotation = newObj.transform.rotation;
                 eo.data.obType = EditorObject.ObjectType.Player;
             }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Background)
+            {
+                backgroundMenuIndex = _level.editorObjects[i].bckGrndIndex;
+                dropdownMenu.GetComponent<Dropdown>().value = backgroundMenuIndex;
+                ChangeBackgroundImage();
+            }
         }
 
         levelNameLoad.text = "";
@@ -366,6 +413,11 @@ public class ManagerScript : MonoBehaviour
         saveLoadMenuOpen = false;
         levelMessage.text = "Level loaded";
         messageAnim.Play("MessageFade", 0, 0);
+    }
+
+    public void BackToTitleScreen()
+    {
+        SceneManager.LoadScene("TitleScreen");
     }
 }
 
