@@ -34,8 +34,8 @@ public class ManagerScript : MonoBehaviour
     public GameObject background_1;
     public GameObject background_2;
     public GameObject background_3;
+    public Text currentMode;
     private int backgroundMenuIndex;
-    private GameObject data;
 
     void Start()
     {
@@ -115,12 +115,14 @@ public class ManagerScript : MonoBehaviour
             saveUIAnimation.SetTrigger("SaveLoadIn");
             _savePositionIn = true;
             saveLoadMenuOpen = true;
+            currentMode.text = "SAVE";
         }
         else if (_savePositionIn == true && _loadPositionIn == false && saveLoadMenuOpen == true)
         {
             saveUIAnimation.SetTrigger("SaveLoadOut");
             _savePositionIn = false;
             saveLoadMenuOpen = false;
+            currentMode.text = "";
         }
     }
 
@@ -131,12 +133,14 @@ public class ManagerScript : MonoBehaviour
             loadUIAnimation.SetTrigger("SaveLoadIn");
             _loadPositionIn = true;
             saveLoadMenuOpen = true;
+            currentMode.text = "LOAD";
         }
         else if (_loadPositionIn == true && _savePositionIn == false && saveLoadMenuOpen == true)
         {
             loadUIAnimation.SetTrigger("SaveLoadOut");
             _loadPositionIn = false;
             saveLoadMenuOpen = false;
+            currentMode.text = "";
         }
     }
 
@@ -153,6 +157,7 @@ public class ManagerScript : MonoBehaviour
     {
         msScript.itemOption = MouseScript.ItemList.Player;
         mouseObject.mesh = startMarker;
+        currentMode.text = "MARK START";
     }
 
     public void ChooseCreate()
@@ -160,6 +165,7 @@ public class ManagerScript : MonoBehaviour
         msScript.manipulateOption = MouseScript.LevelManipulation.Create;
         msScript.meshRend.enabled = true;
         flipUI.SetActive(false);
+        currentMode.text = "CREATE";
     }
 
     public void ChooseRotate()
@@ -167,6 +173,7 @@ public class ManagerScript : MonoBehaviour
         msScript.manipulateOption = MouseScript.LevelManipulation.Rotate;
         msScript.meshRend.enabled = false;
         flipUI.SetActive(true);
+        currentMode.text = "FLIP";
     }
 
     public void ChooseDestroy()
@@ -174,6 +181,7 @@ public class ManagerScript : MonoBehaviour
         msScript.manipulateOption = MouseScript.LevelManipulation.Destroy;
         msScript.meshRend.enabled = false;
         flipUI.SetActive(false);
+        currentMode.text = "DESTROY";
     }
 
     public void SaveLevel()
@@ -187,8 +195,6 @@ public class ManagerScript : MonoBehaviour
 
         // Save current background value
         EditorObject.Data objData;
-        //GameObject obj;
-        //EditorObject eo = obj.AddComponent<EditorObject>();
         objData.bckGrndIndex = backgroundMenuIndex;
         objData.obPosition = new Vector3(1, 1, 1);
         objData.obRotation = Quaternion.identity;
@@ -197,7 +203,7 @@ public class ManagerScript : MonoBehaviour
 
         string json = JsonUtility.ToJson(_level);
         string folder = Application.dataPath + "/JSON/";
-        string levelFile = "";
+        string levelFile;
 
         // Default file name
         if (levelNameSave.text == "")
@@ -239,7 +245,7 @@ public class ManagerScript : MonoBehaviour
     public void LoadLevel()
     {
         string folder = Application.dataPath + "/JSON/";
-        string levelFile = "";
+        string levelFile;
 
         // Default file name
         if (levelNameLoad.text == "")

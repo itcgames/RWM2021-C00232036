@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{209096CA-BA3F-AAD3-1632-0BF14FB660E4}</ProjectGuid>
+    <ProjectGuid>{5FA1E2EB-8899-BBC4-672F-2B15B1048CFF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -600,31 +600,31 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036-P1/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036-P1/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036-P1/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036-P1/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036-P1/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036-P1/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036-P1/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036-P1/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/alanj/OneDrive/Documents/College Repositories/Real World Modelling/RWM2021-C00232036-P1/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup></ItemGroup>
