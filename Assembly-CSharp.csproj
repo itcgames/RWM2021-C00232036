@@ -63,14 +63,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CameraMove.cs" />
-    <Compile Include="Assets\Scripts\CameraSpeedDisplay.cs" />
-    <Compile Include="Assets\Scripts\EditorObject.cs" />
-    <Compile Include="Assets\Scripts\GridSystem.cs" />
-    <Compile Include="Assets\Scripts\LevelEditor.cs" />
-    <Compile Include="Assets\Scripts\ManagerScript.cs" />
-    <Compile Include="Assets\Scripts\MouseScript.cs" />
-    <Compile Include="Assets\Scripts\TitleMenuManager.cs" />
+    <Compile Include="Assets\Level Editor\Scripts\CameraMove.cs" />
+    <Compile Include="Assets\Level Editor\Scripts\CameraSpeedDisplay.cs" />
+    <Compile Include="Assets\Level Editor\Scripts\EditorObject.cs" />
+    <Compile Include="Assets\Level Editor\Scripts\GridSystem.cs" />
+    <Compile Include="Assets\Level Editor\Scripts\LevelEditor.cs" />
+    <Compile Include="Assets\Level Editor\Scripts\ManagerScript.cs" />
+    <Compile Include="Assets\Level Editor\Scripts\MapLoader.cs" />
+    <Compile Include="Assets\Level Editor\Scripts\MouseScript.cs" />
+    <Compile Include="Assets\Level Editor\Scripts\TitleMenuManager.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
