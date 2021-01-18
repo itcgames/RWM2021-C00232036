@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class MouseScript : MonoBehaviour
@@ -100,7 +104,6 @@ public class MouseScript : MonoBehaviour
     void SetRotateObject()
     {
         rotObject = _rayHit.collider.gameObject;
-        manager.flipSlider.value = rotObject.transform.rotation.y;
     }
 
     void CreateObject()
@@ -250,6 +253,11 @@ public class MouseScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets the closest grid point to the current object.
+    /// </summary>
+    /// <param name="gridPoint"></param>
+    /// <returns>The grid point position.</returns>
     Vector3 SnapToGrid(Vector3 gridPoint)
     {
         return _gridSystem.GetClosestGridPoint(gridPoint);

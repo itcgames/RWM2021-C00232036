@@ -21,7 +21,6 @@ public class ManagerScript : MonoBehaviour
     public Animator optionUIAnimation;
     public Animator saveUIAnimation;
     public Animator loadUIAnimation;
-    public Slider flipSlider;
     public GameObject flipUI;
     public Text levelMessage;
     public Animator messageAnim;
@@ -35,11 +34,12 @@ public class ManagerScript : MonoBehaviour
     public GameObject background_2;
     public GameObject background_3;
     public Text currentMode;
+    public Text currentItem;
     private int backgroundMenuIndex;
 
     void Start()
     {
-        flipSlider.onValueChanged.AddListener(delegate { RotationValueChange(); });
+        // flipToggle.onValueChanged.AddListener(delegate { RotationValueChange(); });
         CreateEditor();
     }
 
@@ -74,9 +74,9 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
-    void RotationValueChange()
+    public void RotationValueChange()
     {
-        msScript.rotObject.transform.Rotate(0, flipSlider.value * 180.0f, 0);
+        msScript.rotObject.transform.Rotate(0, 180.0f, 0);
         msScript.rotObject.GetComponent<EditorObject>().data.obRotation = msScript.rotObject.transform.rotation;
     }
 
@@ -144,20 +144,21 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
-    public void Select_Item_1() { msScript.itemOption = MouseScript.ItemList.Item_1; }
-    public void Select_Item_2() { msScript.itemOption = MouseScript.ItemList.Item_2; }
-    public void Select_Item_3() { msScript.itemOption = MouseScript.ItemList.Item_3; }
-    public void Select_Item_4() { msScript.itemOption = MouseScript.ItemList.Item_4; }
-    public void Select_Item_5() { msScript.itemOption = MouseScript.ItemList.Item_5; }
-    public void Select_Item_6() { msScript.itemOption = MouseScript.ItemList.Item_6; }
-    public void Select_Item_7() { msScript.itemOption = MouseScript.ItemList.Item_7; }
-    public void Select_Item_8() { msScript.itemOption = MouseScript.ItemList.Item_8; }
+    public void Select_Item_1() { msScript.itemOption = MouseScript.ItemList.Item_1; currentItem.text = "GRASS BLOCK"; }
+    public void Select_Item_2() { msScript.itemOption = MouseScript.ItemList.Item_2; currentItem.text = "GRASS OVERHANG"; }
+    public void Select_Item_3() { msScript.itemOption = MouseScript.ItemList.Item_3; currentItem.text = "GRASS CORNER"; }
+    public void Select_Item_4() { msScript.itemOption = MouseScript.ItemList.Item_4; currentItem.text = "GRASS CURVE"; }
+    public void Select_Item_5() { msScript.itemOption = MouseScript.ItemList.Item_5; currentItem.text = "DIRT BLOCK"; }
+    public void Select_Item_6() { msScript.itemOption = MouseScript.ItemList.Item_6; currentItem.text = "DIRT SLOPE"; }
+    public void Select_Item_7() { msScript.itemOption = MouseScript.ItemList.Item_7; currentItem.text = "GRASS BLOCK ROUNDED"; }
+    public void Select_Item_8() { msScript.itemOption = MouseScript.ItemList.Item_8; currentItem.text = "GRASS SLOPE"; }
 
     public void ChoosePlayerStart()
     {
         msScript.itemOption = MouseScript.ItemList.Player;
         mouseObject.mesh = startMarker;
         currentMode.text = "PLAYER START";
+        currentItem.text = "USE THIS MARKER TO SET WHERE THE PLAYER SHOULD START THE LEVEL FROM";
     }
 
     public void ChooseCreate()
