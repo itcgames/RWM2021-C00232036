@@ -36,6 +36,7 @@ public class ManagerScript : MonoBehaviour
     public Text currentMode;
     public Text currentItem;
     private int backgroundMenuIndex;
+    public GameObject help;
 
     void Start()
     {
@@ -48,6 +49,18 @@ public class ManagerScript : MonoBehaviour
         _level = new LevelEditor();
         _level.editorObjects = new List<EditorObject.Data>();
         return _level;
+    }
+
+    public void ToggleInstructions()
+    {
+        if (help.activeSelf == false)
+        {
+            help.SetActive(true);
+        }
+        else
+        {
+            help.SetActive(false);
+        }
     }
 
     public void ChangeBackgroundImage()
