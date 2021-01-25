@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class MouseScript : MonoBehaviour
 {
-    public enum ItemList { Item_1, Item_2, Item_3, Item_4, Item_5, Item_6, Item_7, Item_8, Player };
+    public enum ItemList { Item_1, Item_2, Item_3, Item_4, Item_5, Item_6, Item_7, Item_8, Player, Collectable };
     public enum LevelManipulation { Create, Destroy, Rotate };
 
     [HideInInspector]
@@ -23,8 +23,7 @@ public class MouseScript : MonoBehaviour
     public GameObject rotObject;
 
     public Material allowedPlacement;
-    public Material disallowedPlacement;
-    public GameObject playerSt;
+    public Material disallowedPlacement;    
     public ManagerScript manager;
     
     // Level items
@@ -36,6 +35,8 @@ public class MouseScript : MonoBehaviour
     public GameObject item_6;
     public GameObject item_7;
     public GameObject item_8;
+    public GameObject playerSt;
+    public GameObject collectable;
     public GameObject background;
 
     // Mouse and ray casting stuff
@@ -63,7 +64,7 @@ public class MouseScript : MonoBehaviour
 
         if (Physics.Raycast(_rayCast, out _rayHit))
         {
-            if (_rayHit.collider.gameObject.layer == 9) // Check if raycast hits object
+            if (_rayHit.collider.gameObject.layer == 9 || _rayHit.collider.gameObject.layer == 8) // Check if raycast hits object
             {
                 _colliding = true;
                 meshRend.material = disallowedPlacement; // Red for no-no
@@ -93,7 +94,7 @@ public class MouseScript : MonoBehaviour
                     if (_rayHit.collider.gameObject.name.Contains("Player"))
                     {
                         manager.playerPlaced = false;
-                    }                        
+                    }
 
                     Destroy(_rayHit.collider.gameObject);
                 }
@@ -101,6 +102,9 @@ public class MouseScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set object rotation.
+    /// </summary>
     void SetRotateObject()
     {
         rotObject = _rayHit.collider.gameObject;
@@ -239,9 +243,6 @@ public class MouseScript : MonoBehaviour
                 newObj.transform.position = SnapToGrid(_rayHit.point);
                 newObj.transform.Translate(new Vector3(0.0f, -0.5f, 0.0f));
                 newObj.layer = 9;
-                newObj.AddComponent<CapsuleCollider>();
-                newObj.GetComponent<CapsuleCollider>().center = new Vector3(0, 1, 0);
-                newObj.GetComponent<CapsuleCollider>().height = 2;
                 manager.playerPlaced = true;
 
                 // Add editor object component
@@ -250,6 +251,20 @@ public class MouseScript : MonoBehaviour
                 eo.data.obRotation = newObj.transform.rotation;
                 eo.data.obType = EditorObject.ObjectType.Player;
             }
+        }
+        else if (itemOption == ItemList.Collectable)
+        {
+            // Create object
+            newObj = Instantiate(collectable);
+            newObj.transform.position = SnapToGrid(_rayHit.point);
+            // newObj.transform.Translate(new Vector3(0.0f, 0.0f, 0.0f));
+            newObj.layer = 8;
+
+            // Add editor object component
+            EditorObject eo = newObj.AddComponent<EditorObject>();
+            eo.data.obPosition = newObj.transform.position;
+            eo.data.obRotation = newObj.transform.rotation;
+            eo.data.obType = EditorObject.ObjectType.Collectable;
         }
     }
 

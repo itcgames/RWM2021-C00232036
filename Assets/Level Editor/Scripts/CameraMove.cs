@@ -17,30 +17,26 @@ public class CameraMove : MonoBehaviour
 
     void Update()
     {
-        // Check if any menus are already open
-        if (manager.saveLoadMenuOpen == false)
+        _zoom = Input.GetAxis("Mouse ScrollWheel") * 10;
+        _x = Input.GetAxis("Horizontal");
+        _y = Input.GetAxis("Vertical");
+
+        // Move camera
+        transform.Translate(new Vector3(_x * -cameraSpeedSlide.value, _y * -cameraSpeedSlide.value, 0.0f));
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -50, 180), Mathf.Clamp(transform.position.y, -20, 20), Mathf.Clamp(transform.position.z, -20, 20));
+
+        // Zoom by increasing or decreasing camera orthographic size between -25 and -5
+        int min = -25;
+        int max = -5;
+
+        if (_zoom < 0 && _camera.orthographicSize >= min)
         {
-            _zoom = Input.GetAxis("Mouse ScrollWheel") * 10;
-            _x = Input.GetAxis("Horizontal");
-            _y = Input.GetAxis("Vertical");
+            _camera.orthographicSize -= _zoom * -cameraSpeedSlide.value;
+        }
 
-            // Move camera
-            transform.Translate(new Vector3(_x * -cameraSpeedSlide.value, _y * -cameraSpeedSlide.value, 0.0f));
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -50, 180), Mathf.Clamp(transform.position.y, -20, 20), Mathf.Clamp(transform.position.z, -20, 20));
-
-            // Zoom by increasing or decreasing camera orthographic size between -25 and -5
-            int min = -25;
-            int max = -5;
-
-            if (_zoom < 0 && _camera.orthographicSize >= min)
-            {
-                _camera.orthographicSize -= _zoom * -cameraSpeedSlide.value;
-            }                
-
-            if (_zoom > 0 && _camera.orthographicSize <= max)
-            {
-                _camera.orthographicSize += _zoom * cameraSpeedSlide.value;
-            }                
+        if (_zoom > 0 && _camera.orthographicSize <= max)
+        {
+            _camera.orthographicSize += _zoom * cameraSpeedSlide.value;
         }
     }
 }

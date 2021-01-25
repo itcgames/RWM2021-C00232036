@@ -40,10 +40,13 @@ public class ManagerScript : MonoBehaviour
 
     void Start()
     {
-        // flipToggle.onValueChanged.AddListener(delegate { RotationValueChange(); });
         CreateEditor();
     }
 
+    /// <summary>
+    /// Create a level editor instance.
+    /// </summary>
+    /// <returns></returns>
     LevelEditor CreateEditor()
     {
         _level = new LevelEditor();
@@ -51,6 +54,9 @@ public class ManagerScript : MonoBehaviour
         return _level;
     }
 
+    /// <summary>
+    /// Toggle the help screen on and off.
+    /// </summary>
     public void ToggleInstructions()
     {
         if (help.activeSelf == false)
@@ -63,6 +69,9 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Change the background image to match the dropdown menu value.
+    /// </summary>
     public void ChangeBackgroundImage()
     {
         backgroundMenuIndex = dropdownMenu.GetComponent<Dropdown>().value;
@@ -87,12 +96,18 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Used to flip a tile.
+    /// </summary>
     public void RotationValueChange()
     {
         msScript.rotObject.transform.Rotate(0, 180.0f, 0);
         msScript.rotObject.GetComponent<EditorObject>().data.obRotation = msScript.rotObject.transform.rotation;
     }
 
+    /// <summary>
+    /// Slides menu in or out.
+    /// </summary>
     public void SlideItemMenu()
     {
         if (_itemPositionIn == false)
@@ -107,6 +122,9 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Slides options in and out.
+    /// </summary>
     public void SlideOptionMenu()
     {
         if (_optionPositionIn == false)
@@ -121,6 +139,9 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Choose to save.
+    /// </summary>
     public void ChooseSave()
     {
         if (_savePositionIn == false && _loadPositionIn == false && saveLoadMenuOpen == false)
@@ -139,6 +160,9 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Choose to load.
+    /// </summary>
     public void ChooseLoad()
     {
         if (_loadPositionIn == false && _savePositionIn == false && saveLoadMenuOpen == false)
@@ -157,6 +181,9 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Display chosen item description.
+    /// </summary>
     public void Select_Item_1() { msScript.itemOption = MouseScript.ItemList.Item_1; currentItem.text = "GRASS BLOCK"; }
     public void Select_Item_2() { msScript.itemOption = MouseScript.ItemList.Item_2; currentItem.text = "GRASS OVERHANG"; }
     public void Select_Item_3() { msScript.itemOption = MouseScript.ItemList.Item_3; currentItem.text = "GRASS CORNER"; }
@@ -166,14 +193,28 @@ public class ManagerScript : MonoBehaviour
     public void Select_Item_7() { msScript.itemOption = MouseScript.ItemList.Item_7; currentItem.text = "GRASS BLOCK ROUNDED"; }
     public void Select_Item_8() { msScript.itemOption = MouseScript.ItemList.Item_8; currentItem.text = "GRASS SLOPE"; }
 
+    /// <summary>
+    /// Choose to place the player start position.
+    /// </summary>
     public void ChoosePlayerStart()
     {
         msScript.itemOption = MouseScript.ItemList.Player;
         mouseObject.mesh = startMarker;
-        currentMode.text = "PLAYER START";
-        currentItem.text = "USE THIS MARKER TO SET WHERE THE PLAYER SHOULD START THE LEVEL FROM";
+        currentItem.text = "PLAYER START POSITION";
     }
 
+    /// <summary>
+    /// Choose collectable item.
+    /// </summary>
+    public void ChooseCollectable()
+    {
+        msScript.itemOption = MouseScript.ItemList.Collectable;
+        currentItem.text = "COLLECTABLE ITEM";
+    }
+
+    /// <summary>
+    /// Choose create.
+    /// </summary>
     public void ChooseCreate()
     {
         msScript.manipulateOption = MouseScript.LevelManipulation.Create;
@@ -182,6 +223,9 @@ public class ManagerScript : MonoBehaviour
         currentMode.text = "CREATE";
     }
 
+    /// <summary>
+    /// Choose flip.
+    /// </summary>
     public void ChooseRotate()
     {
         msScript.manipulateOption = MouseScript.LevelManipulation.Rotate;
@@ -190,6 +234,9 @@ public class ManagerScript : MonoBehaviour
         currentMode.text = "FLIP";
     }
 
+    /// <summary>
+    /// Choose destroy.
+    /// </summary>
     public void ChooseDestroy()
     {
         msScript.manipulateOption = MouseScript.LevelManipulation.Destroy;
@@ -198,11 +245,13 @@ public class ManagerScript : MonoBehaviour
         currentMode.text = "DESTROY";
     }
 
+    /// <summary>
+    /// Save the current level.
+    /// </summary>
     public void SaveLevel()
     {
         EditorObject[] foundObjects = FindObjectsOfType<EditorObject>();
 
-        // It took me 4 hours to realise I needed this to avoid duplicates added to the list
         if (_level.editorObjects.Count > 0)
         {
             _level.editorObjects.Clear();
@@ -243,7 +292,7 @@ public class ManagerScript : MonoBehaviour
 
         string path = Path.Combine(folder, levelFile);
 
-        // Overwrite existing file by DESTROYING it then CREATING a new one
+        // OVERWRITE existing file by DESTROYING it then CREATING a new one
         // Typing verbs in UPPER CASE gives one a sense of unbridled power
         if (File.Exists(path))
         {
@@ -263,6 +312,9 @@ public class ManagerScript : MonoBehaviour
         messageAnim.Play("MessageFade", 0, 0);
     }
 
+    /// <summary>
+    /// Load a level from a file.
+    /// </summary>
     public void LoadLevel()
     {
         string folder = Application.dataPath + "/Saved Levels/";
@@ -308,6 +360,9 @@ public class ManagerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Create level.
+    /// </summary>
     void CreateFromFile()
     {
         GameObject newObj;
@@ -425,6 +480,18 @@ public class ManagerScript : MonoBehaviour
                 eo.data.obRotation = newObj.transform.rotation;
                 eo.data.obType = EditorObject.ObjectType.Player;
             }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Collectable)
+            {
+                newObj = Instantiate(msScript.collectable);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 9;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Collectable;
+            }
             else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Background)
             {
                 backgroundMenuIndex = _level.editorObjects[i].bckGrndIndex;
@@ -440,11 +507,6 @@ public class ManagerScript : MonoBehaviour
         saveLoadMenuOpen = false;
         levelMessage.text = "Level loaded";
         messageAnim.Play("MessageFade", 0, 0);
-    }
-
-    public void BackToTitleScreen()
-    {
-        SceneManager.LoadScene("TitleScreen");
     }
 }
 

@@ -5,6 +5,11 @@ public class GridSystem : MonoBehaviour
     [SerializeField]
     private float _size = 1.0f;
 
+    /// <summary>
+    /// Gets the closest grid point.
+    /// </summary>
+    /// <param name="pos">Position</param>
+    /// <returns>The closest point to the given position.</returns>
     public Vector3 GetClosestGridPoint(Vector3 pos)
     {
         pos -= transform.position;

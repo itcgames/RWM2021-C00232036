@@ -19,6 +19,7 @@ public class MapLoader : MonoBehaviour
     public GameObject background_1;
     public GameObject background_2;
     public GameObject background_3;
+    public GameObject steakPickup;
     private int backgroundMenuIndex;
 
     void Start()
@@ -56,6 +57,9 @@ public class MapLoader : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Load a level from a file.
+    /// </summary>
     public void LoadLevel()
     {
         string path = Application.dataPath;
@@ -81,6 +85,9 @@ public class MapLoader : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Create level.
+    /// </summary>
     void CreateFromFile()
     {
         GameObject newObj;
@@ -187,6 +194,18 @@ public class MapLoader : MonoBehaviour
             {
                 // This sets the player starting position
                 // PLAYER_POSITION = _level.editorObjects[i].obPosition;
+            }
+            else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Collectable)
+            {
+                newObj = Instantiate(steakPickup);
+                newObj.transform.position = _level.editorObjects[i].obPosition;
+                newObj.transform.rotation = _level.editorObjects[i].obRotation;
+                newObj.layer = 8;
+
+                EditorObject eo = newObj.AddComponent<EditorObject>();
+                eo.data.obPosition = newObj.transform.position;
+                eo.data.obRotation = newObj.transform.rotation;
+                eo.data.obType = EditorObject.ObjectType.Collectable;
             }
             else if (_level.editorObjects[i].obType == EditorObject.ObjectType.Background)
             {
